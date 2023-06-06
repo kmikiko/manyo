@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  explanation: MyString
+  duedate: 2023-06-06
+  priority: MyString
+
+two:
+  name: MyString
+  explanation: MyString
+  duedate: 2023-06-06
+  priority: MyString
