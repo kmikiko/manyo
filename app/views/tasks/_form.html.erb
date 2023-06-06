@@ -1,0 +1,31 @@
+<%= form_with(model: @task, local: true) do |f|%>
+  <div class="field">
+    <table>
+      <tr>
+        <td><%= f.label :name %></td>
+      </tr>
+      <tr>
+        <td><%= f.text_field :name %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :explanation %></td>
+      </tr>
+      <tr>
+        <td><%= f.text_area :explanation %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :duedate %></td></td>
+      </tr>
+      <tr>
+        <td><%= f.text_field :duedate %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :priority %></td>
+      </tr>
+      <tr>
+        <td><%= f.text_field :priority %></td>
+      </tr>  
+    </table>
+  </div>
+  <%= f.submit "登録"%>
+<% end %>
