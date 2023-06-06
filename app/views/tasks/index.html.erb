@@ -5,8 +5,9 @@
         <h3><%= task.name %></h3>
       </td>
       <td>
-        <h3><%= task.explanation %></h3>
+        <h3><%= task.detail %></h3>
       </td>
+      <td><%= link_to "タスク編集",edit_task_path(task.id), data: { confirm: '本当に編集していいですか？' } %></td>
     </tr>
   <% end %>
 </table>
@@ -14,5 +15,6 @@
 <table>
   <tr>
     <td><%= link_to "タスク登録",new_task_path %></td>
+    
   </tr>
 </table>
