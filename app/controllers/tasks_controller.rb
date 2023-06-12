@@ -5,7 +5,10 @@ class TasksController < ApplicationController
     if params[:sort_expired]
       @tasks = Task.order(expired_at: "DESC")
     end
-    
+    if params[:sort_priority]
+      @tasks = Task.order(priority: "ASC")
+    end
+
     if params[:task].present?
       if params[:task][:keyword].present? && params[:task][:status].present?
         @tasks = @tasks.search_name(params[:task][:keyword]).search_status(params[:task][:status])
@@ -59,7 +62,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:name, :detail, :expired_at, :status)
+    params.require(:task).permit(:name, :detail, :expired_at, :status, :priority)
   end
 end
 

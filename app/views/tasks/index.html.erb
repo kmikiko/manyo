@@ -16,12 +16,11 @@
     </tr>
   </table>
 <% end %>
-<%= link_to "終了期限でソートする", tasks_path(sort_expired: "true") %>
 
 <table>
   <thead>
       <tr>
-        <th>タスク</th><th>詳細</th><th>終了期限</th><th>ステータス</th><th>優先度</th>
+        <th>タスク</th><th>詳細</th><th><%= link_to "終了期限", tasks_path(sort_expired: "true") %></th><th>ステータス</th><th><%= link_to "優先度", tasks_path(sort_priority: "true") %></th>
       </tr>
   </thead>
   <% @tasks.each do |task| %>

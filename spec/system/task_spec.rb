@@ -21,8 +21,8 @@ RSpec.describe 'タスク管理機能', type: :system do
   end
   describe '一覧表示機能' do
     before do
-      @task1 = FactoryBot.create(:task, name: 'bbb', expired_at: '002024-08-06')
-      @task2 = FactoryBot.create(:task, name: 'ccc', expired_at: '002024-07-06')
+      @task1 = FactoryBot.create(:task, name: 'bbb', expired_at: '002024-08-06', priority: 1)
+      @task2 = FactoryBot.create(:task, name: 'ccc', expired_at: '002024-07-06', priority: 2)
       visit tasks_path
     end
     context '一覧画面に遷移した場合' do
@@ -41,11 +41,21 @@ RSpec.describe 'タスク管理機能', type: :system do
     end
     context '終了期限でソートするをクリックした場合' do
       it '終了期限の１番遅いタスクが１番上に表示される' do
-        click_on "終了期限でソートする"
+        click_on "終了期限"
         sleep(2)
         task_expired_lists = all('.task_expired')
         expect(task_expired_lists[0]).to have_content '2024-08-06'
         expect(task_expired_lists[1]).to have_content '2024-07-06'
+      end
+    end
+    context '優先度でソートするをクリックした場合' do
+      it '優先度の１番高いタスクが１番上に表示される' do
+        click_on "優先度"
+        sleep(2)
+        task_priority_lists = all('.task_priority')
+        expect(task_priority_lists[0]).to have_content 'high'
+        expect(task_priority_lists[1]).to have_content 'middle'
+        expect(task_priority_lists[2]).to have_content 'low'
       end
     end
   end
