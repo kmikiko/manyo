@@ -1,8 +1,11 @@
 example_id                          | status | run_time        |
 ----------------------------------- | ------ | --------------- |
-./spec/models/task_spec.rb[1:1:1:1] | passed | 0.00058 seconds |
-./spec/models/task_spec.rb[1:1:2:1] | passed | 0.00043 seconds |
-./spec/models/task_spec.rb[1:1:3:1] | passed | 0.00039 seconds |
+./spec/models/task_spec.rb[1:1:1:1] | passed | 0.00033 seconds |
+./spec/models/task_spec.rb[1:1:2:1] | passed | 0.00045 seconds |
+./spec/models/task_spec.rb[1:1:3:1] | passed | 0.00091 seconds |
+./spec/models/task_spec.rb[1:2:1:1] | passed | 0.00404 seconds |
+./spec/models/task_spec.rb[1:2:2:1] | passed | 0.01964 seconds |
+./spec/models/task_spec.rb[1:2:3:1] | passed | 0.00459 seconds |
 ./spec/system/task_spec.rb[1:1:1:1] | passed | 0.46036 seconds |
 ./spec/system/task_spec.rb[1:2:1:1] | passed | 0.10012 seconds |
 ./spec/system/task_spec.rb[1:2:2:1] | passed | 0.0965 seconds  |

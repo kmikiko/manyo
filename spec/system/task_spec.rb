@@ -42,7 +42,7 @@ RSpec.describe 'タスク管理機能', type: :system do
     context '終了期限でソートするをクリックした場合' do
       it '終了期限の１番遅いタスクが１番上に表示される' do
         click_on "終了期限でソートする"
-        # sleep(2)
+        sleep(2)
         task_expired_lists = all('.task_expired')
         expect(task_expired_lists[0]).to have_content '2024-08-06'
         expect(task_expired_lists[1]).to have_content '2024-07-06'
