@@ -1,5 +1,11 @@
 @import "bootstrap";
 
+
 a:link, a:visited, a:hover, a:active {
   text-decoration: none;
+  color: navy
 }
+a:hover, a:active {
+  color: #f0f8ff;
+}
+
