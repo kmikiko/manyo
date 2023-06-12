@@ -8,6 +8,7 @@
     </ul>
   </div>
 <% end %>
+
 <%= form_with(model: @task, local: true) do |f|%>
   <div class="field">
     <table>
@@ -23,7 +24,19 @@
       <tr>
         <td><%= f.text_area :detail %></td>
       </tr>
+      <tr>
+        <td><%= f.label :expired_at %></td>
+      </tr>
+      <tr>
+        <td><%= f.date_select :expired_at %></td>
+      </tr>
     </table>
+      <tr>
+        <td><%= f.label :status %></td>
+      </tr>
+      <tr>
+        <td><%= f.select :status, [["未着手", "未着手"], ["着手中", "着手中"], ["完了", "完了"]], include_blank: "選択して下さい", required: true %></td>
+      </tr>
   </div>
   <%= f.submit t('view.register') %>
 <% end %>

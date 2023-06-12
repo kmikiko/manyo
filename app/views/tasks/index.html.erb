@@ -1,18 +1,49 @@
 <p><%= notice %></p>
-
-<table>
-  <% @tasks.each do |task| %>
+<%= form_with url: tasks_path, scope: :task, method: :get, local: true do |f| %>
+  <table>
     <tr>
-      <td class = "task_row">
-        <h3><%= task.name %></h3>
+      <td>
+        タスク名 
+        <%= f.text_field :keyword, placeholder: "検索する" %>
       </td>
       <td>
-        <h3><%= task.detail %></h3>
+        ステータス 
+        <%= f.select :status, [["未着手", "未着手"], ["着手中", "着手中"], ["完了", "完了"]], include_blank: "  "  %>
       </td>
-      <td><%= link_to t('view.edit'),edit_task_path(task.id), data: { confirm: '本当に編集していいですか？' } %></td>
-      <td><%= link_to t('view.detail'),task_path(task.id) %></td>
-      <td><%= link_to t('view.delete'),task_path(task.id), method: :delete, data: { confirm: '本当に削除していいですか？' } %></td>
+      <td>
+      <%= f.submit "検索" %>
+      </td>
     </tr>
+  </table>
+<% end %>
+<%= link_to "終了期限でソートする", tasks_path(sort_expired: "true") %>
+
+<table>
+  <thead>
+      <tr>
+        <th>タスク</th><th>詳細</th><th>終了期限</th><th>ステータス</th>
+      </tr>
+  </thead>
+  <% @tasks.each do |task| %>
+    <tbody>
+      <tr>
+        <td class = "task_row">
+          <h3><%= task.name %></h3>
+        </td>
+        <td>
+          <h3><%= task.detail %></h3>
+        </td>
+        <td class = "task_expired">
+          <h3><%= task.expired_at %></h3>
+        </td>
+        <td class = "task_status">
+          <h3><%= task.status %></h3>
+        </td>
+        <td><%= link_to t('view.edit'),edit_task_path(task.id), data: { confirm: '本当に編集していいですか？' } %></td>
+        <td><%= link_to t('view.detail'),task_path(task.id) %></td>
+        <td><%= link_to t('view.delete'),task_path(task.id), method: :delete, data: { confirm: '本当に削除していいですか？' } %></td>
+      </tr>
+    </tbody> 
   <% end %>
 </table>
 

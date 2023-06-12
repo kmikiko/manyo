@@ -5,4 +5,6 @@ ja:
     attributes:
       task:
         name: タスク名
-        detail: 詳細
+        detail: 詳しい内容
+        expired_at: 終了期限
+        status: ステータス
