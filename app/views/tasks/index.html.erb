@@ -1,4 +1,5 @@
 <p><%= notice %></p>
+<h2> タスク管理</h2>
 <%= form_with url: tasks_path, scope: :task, method: :get, local: true do |f| %>
   <table>
     <tr>
@@ -11,47 +12,62 @@
         <%= f.select :status, [["未着手", "未着手"], ["着手中", "着手中"], ["完了", "完了"]], include_blank: "  "  %>
       </td>
       <td>
-      <%= f.submit "検索" %>
+        <%= f.submit "検索" %>
       </td>
     </tr>
   </table>
 <% end %>
 
-<table>
+<table class="table table-hover">
   <thead>
-      <tr>
-        <th>タスク</th><th>詳細</th><th><%= link_to "終了期限", tasks_path(sort_expired: "true") %></th><th>ステータス</th><th><%= link_to "優先度", tasks_path(sort_priority: "true") %></th>
-      </tr>
+    <tr class="table-danger">
+      <th scope="col">タスク</th>
+      <th scope="col">詳細</th>
+      <th scope="col"><%= link_to "終了期限", tasks_path(sort_expired: "true") %></th>
+      <th scope="col">ステータス</th>
+      <th scope="col"><%= link_to "優先度", tasks_path(sort_priority: "true") %></th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
   </thead>
   <% @tasks.each do |task| %>
     <tbody>
       <tr>
         <td class = "task_name">
-          <h3><%= task.name %></h3>
+          <h5><%= task.name %></h5>
         </td>
         <td>
-          <h3><%= task.detail %></h3>
+          <h5><%= task.detail %></h5>
         </td>
         <td class = "task_expired">
-          <h3><%= task.expired_at %></h3>
+          <h5><%= task.expired_at %></h5>
         </td>
         <td class = "task_status">
-          <h3><%= task.status %></h3>
+          <h5><%= task.status %></h5>
         </td>
         <td class = "task_priority">
-          <h3><%= task.priority %></h3>
+          <h5><%= task.priority %></h5>
         </td>
-        <td><%= link_to t('view.edit'),edit_task_path(task.id), data: { confirm: '本当に編集していいですか？' } %></td>
-        <td><%= link_to t('view.detail'),task_path(task.id) %></td>
-        <td><%= link_to t('view.delete'),task_path(task.id), method: :delete, data: { confirm: '本当に削除していいですか？' } %></td>
+        <td class="btn btn-outline-success">
+          <%= link_to t('view.edit'),edit_task_path(task.id), data: { confirm: '本当に編集していいですか？' } %>
+        </td>
+        <td class="btn btn-outline-primary">
+          <%= link_to t('view.detail'),task_path(task.id) %>
+        </td>
+        <td class="btn btn-outline-danger">
+          <%= link_to t('view.delete'),task_path(task.id), method: :delete, data: { confirm: '本当に削除していいですか？' } %>
+        </td>
       </tr>
     </tbody> 
   <% end %>
+  <%= paginate @tasks %>
 </table>
 
 <table>
   <tr>
-    <td><%= link_to t('view.register'),new_task_path %></td>
-    
+    <td><h3><%= link_to t('view.register'),new_task_path %></h3></td>
   </tr>
 </table>
+
+  
