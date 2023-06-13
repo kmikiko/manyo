@@ -21,6 +21,7 @@
 <table class="table table-hover">
   <thead>
     <tr class="table-danger">
+      <th scope="col">ユーザー名</th>
       <th scope="col">タスク</th>
       <th scope="col">詳細</th>
       <th scope="col"><%= link_to "終了期限", tasks_path(sort_expired: "true") %></th>
@@ -34,6 +35,9 @@
   <% @tasks.each do |task| %>
     <tbody>
       <tr>
+        <td>
+          <h5><%= task.user.name %></h5>
+        </td>
         <td class = "task_name">
           <h5><%= task.name %></h5>
         </td>

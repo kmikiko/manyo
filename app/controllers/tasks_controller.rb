@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   def index
-    @tasks = Task.all.order(created_at: "DESC").page(params[:page])
+    @tasks = current_user.tasks.order(created_at: "DESC").page(params[:page])
 
     if params[:sort_expired]
       @tasks = Task.order(expired_at: "DESC").page(params[:page])
@@ -27,7 +27,8 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
+    @task = current_user.tasks.build(task_params)
+
     if @task.save
       redirect_to tasks_path, notice:'登録しました！'
     else
