@@ -12,7 +12,7 @@ class Admin::UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      redirect_to admin_user_path(@user), notice: "ユーザー「#{@user.name}」を登録しました。"
+      redirect_to admin_users_path, notice: "ユーザー「#{@user.name}」を登録しました。"
     else
       render :new
     end
@@ -35,7 +35,7 @@ class Admin::UsersController < ApplicationController
     @user = User.find(params[:id])
     if @user.destroy
       redirect_to admin_users_path, 
-      notice: "ユーザー #{@user.name}を削除しました。"
+      notice: "ユーザーを削除しました。"
     else
       redirect_to admin_users_path, alert: "管理者は最低1名必要です。"
     end

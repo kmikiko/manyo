@@ -14,7 +14,7 @@ class UsersController < ApplicationController
     if @user.save
       log_in @user
       flash[:success] = "登録が完了しました!"
-      redirect_to @user
+      redirect_to user_path(@user)
     else
       render :new
     end
@@ -22,7 +22,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    if @user.id != current_user.id
+    if current_user.id != @user.id && !current_user.admin?
       redirect_to tasks_path
     end
   end
