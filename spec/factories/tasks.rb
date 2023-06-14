@@ -6,6 +6,7 @@ FactoryBot.define do
     to   = Date.parse("2023/12/31")
     expired_at { Random.rand(from..to) }
     status {['完了', '着手中', '未着手'].sample}
+    association :user
   end
   
 end

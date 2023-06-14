@@ -1,6 +1,13 @@
 require 'rails_helper'
 RSpec.describe 'タスク管理機能', type: :system do
-  let!(:task) {FactoryBot.create(:task, name: 'aaa')}
+  let!(:user) { FactoryBot.create(:user) }
+  let!(:task) { FactoryBot.create(:task, user: user, name: 'aaa')}
+  before do
+    visit new_session_path
+    fill_in "session[email]",with: user.email
+    fill_in "session[password]",with: user.password
+    click_on "ログイン"
+  end
   describe '新規作成機能' do
     context 'タスクを新規作成した場合' do
       it '作成したタスクが表示される' do
@@ -21,8 +28,8 @@ RSpec.describe 'タスク管理機能', type: :system do
   end
   describe '一覧表示機能' do
     before do
-      @task1 = FactoryBot.create(:task, name: 'bbb', expired_at: '002024-08-06', priority: 1)
-      @task2 = FactoryBot.create(:task, name: 'ccc', expired_at: '002024-07-06', priority: 2)
+      @task1 = FactoryBot.create(:task, user: user, name: 'bbb', expired_at: '002024-08-06', priority: 1)
+      @task2 = FactoryBot.create(:task, user: user, name: 'ccc', expired_at: '002024-07-06', priority: 2)
       visit tasks_path
     end
     context '一覧画面に遷移した場合' do
@@ -62,7 +69,7 @@ RSpec.describe 'タスク管理機能', type: :system do
   describe '詳細表示機能' do
     context '任意のタスク詳細画面に遷移した場合' do
       it '該当タスクの内容が表示される' do
-        task = FactoryBot.create(:task)
+        task = FactoryBot.create(:task, user: user)
         visit task_path(task.id)
         expect(page).to have_content task.name
         expect(page).to have_content task.detail
@@ -72,9 +79,9 @@ RSpec.describe 'タスク管理機能', type: :system do
   describe '検索機能' do
     before do
       # 必要に応じて、テストデータの内容を変更して構わない
-      FactoryBot.create(:task, name: "task", status:"完了")
-      FactoryBot.create(:task, name: "sample", status:"完了")
-      FactoryBot.create(:task, name: "task2", status:"着手前")
+      FactoryBot.create(:task, user: user, name: "task", status:"完了")
+      FactoryBot.create(:task, user: user, name: "sample", status:"完了")
+      FactoryBot.create(:task, user: user, name: "task2", status:"着手前")
     end
 
     context 'タイトルであいまい検索をした場合' do

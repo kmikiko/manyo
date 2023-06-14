@@ -1,22 +1,6 @@
-  <%= alert %>
-<h2> タスク管理 </h2>
-<%= form_with url: tasks_path, scope: :task, method: :get, local: true do |f| %>
-  <table>
-    <tr>
-      <td>
-        タスク名 
-        <%= f.text_field :keyword, placeholder: "検索する" %>
-      </td>
-      <td>
-        ステータス 
-        <%= f.select :status, [["未着手", "未着手"], ["着手中", "着手中"], ["完了", "完了"]], include_blank: "  "  %>
-      </td>
-      <td>
-        <%= f.submit "検索" %>
-      </td>
-    </tr>
-  </table>
-<% end %>
+<h1><%= @user.name %>のページ</h1>
+
+<p>メールアドレス: <%= @user.email %></p>
 
 <table class="table table-hover">
   <thead>
@@ -32,11 +16,11 @@
       <th scope="col"></th>
     </tr>
   </thead>
-  <% @tasks.each do |task| %>
+  <% @user.tasks.each do |task| %>
     <tbody>
       <tr>
         <td>
-          <h5><%= task.user.name %></h5>
+          <h5><%= @user.name %></h5>
         </td>
         <td class = "task_name">
           <h5><%= task.name %></h5>
@@ -65,7 +49,7 @@
       </tr>
     </tbody> 
   <% end %>
-  <%= paginate @tasks %>
+
 </table>
 
 <table>
@@ -73,5 +57,3 @@
     <td class="btn btn-light"><h5><%= link_to t('view.register'),new_task_path %></h5></td>
   </tr>
 </table>
-
-  
