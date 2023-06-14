@@ -27,7 +27,8 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = current_user.tasks.build(task_params)
+    @task = Task.new(task_params)
+    @task.user_id = current_user.id
 
     if @task.save
       redirect_to tasks_path, notice:'登録しました！'

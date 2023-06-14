@@ -1,6 +1,14 @@
 require 'rails_helper'
 RSpec.describe 'タスク管理機能', type: :system do
-  let!(:task) {FactoryBot.create(:task, name: 'aaa')}
+  let!(:user) { FactoryBot.create(:user) }
+  let!(:task) { FactoryBot.create(:task, user: user, name: 'aaa')}
+  before do
+    visit new_session_path
+    fill_in "session[email]",with: "email@example.com"
+    fill_in "session[password]",with: "111111"
+    click_on "ログイン"
+    
+  end
   describe '新規作成機能' do
     context 'タスクを新規作成した場合' do
       it '作成したタスクが表示される' do
