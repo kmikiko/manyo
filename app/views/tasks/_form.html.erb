@@ -42,6 +42,15 @@
       <tr>
         <td><%= f.select :priority, options_for_select_from_enum(Task, :priority) %></td>
       </tr>
+      
+      <br>
+
+      <% Label.all.each do |label| %>
+        <tr>
+          <td><%= f.check_box :label_ids, { multiple: true, checked: @task.label_ids.include?(label.id), disabled: label[:disabled], include_hidden: false }, label[:id] %>
+          <%= f.label :label_ids, label.name, value: label[:id] %></td>
+        </tr>
+        <% end %>
     </table>
   </div>
   <%= f.submit t('view.register') %>

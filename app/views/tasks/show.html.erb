@@ -8,6 +8,7 @@
     <th scope="col">終了期限</th>
     <th scope="col">ステータス</th>
     <th scope="col">優先度</th>
+    <th scope="col">ラベル</th>
   </tr>
   <tr>
     <td><%= @task.user.name %></td>
@@ -16,5 +17,10 @@
     <td><%= @task.expired_at %></td>
     <td><%= @task.status %></td>
     <td><%= @task.priority %></td>
+    <td>
+      <% @task.labels.each do |label| %>
+        <%= label.name %>
+      <% end %>
+    </td>
   </tr>
 </table>
