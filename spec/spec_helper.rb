@@ -1,6 +1,11 @@
+require 'support/capybara.rb' #追記
+require 'capybara/rspec' #追記
+require 'selenium-webdriver' #追記
+
 RSpec.configure do |config|
   config.before(:each, type: :system) do
     driven_by(:selenium_chrome)
+    Capybara.default_max_wait_time = 5 #追記
   end
 
   config.expect_with :rspec do |expectations|
