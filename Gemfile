@@ -18,6 +18,8 @@ gem 'kaminari'
 gem 'bootstrap', '~> 4.4.1'
 gem 'jquery-rails'
 gem 'bcrypt'
+gem 'dotenv-rails' # 開発環境で環境変数を操作するのに必要
+gem 'unicorn' # アプリケーションサーバのunicorn
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -28,6 +30,13 @@ group :development, :test do
   gem 'faker'
   gem 'launchy'
   gem 'rexml'
+  gem 'capistrano', '3.16.0' # capistranoのツール一式
+  gem 'capistrano-bundler'
+  gem 'capistrano-rails'
+  gem 'capistrano-rbenv'
+  gem 'capistrano3-unicorn'
+  gem 'ed25519'
+  gem 'bcrypt_pbkdf'
 end
 
 group :development do
@@ -39,7 +48,11 @@ end
 
 group :test do
   gem 'capybara', '>= 3.26'
-  gem 'webdrivers'
+  gem 'webdrivers'  #, '~> 4.1'   #バージョン指定
+end
+
+group :production do
+gem 'unicorn'
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
