@@ -1,4 +1,5 @@
 require 'rails_helper'
+
 RSpec.describe 'ラベル付け機能', type: :system do
   # before do
   #   driven_by(:rack_test)
@@ -10,6 +11,7 @@ RSpec.describe 'ラベル付け機能', type: :system do
     fill_in "session[email]",with: user.email
     fill_in "session[password]",with: user.password
     click_on "ログイン"
+    sleep 1
   end
   describe 'ラベル付け機能' do
     context '新規作成画面でラベルを作成した場合' do
@@ -23,9 +25,7 @@ RSpec.describe 'ラベル付け機能', type: :system do
         select '完了', from: 'task_status'
         check '家事'
         click_on "登録"
-        sleep 5
         task_label_lists = all('.task_label')
-        sleep 5
         expect(task_label_lists.first).to have_content '家事'
         expect(task_label_lists.first).to_not have_content '仕事'
       end
@@ -42,9 +42,7 @@ RSpec.describe 'ラベル付け機能', type: :system do
         check '仕事'
         check '趣味'
         click_on "登録"
-        sleep 5
         task_label_lists = all('.task_label')
-        sleep 5
         expect(task_label_lists.first).to have_content '仕事'
         expect(task_label_lists.first).to have_content '趣味'
         expect(task_label_lists.first).to_not have_content '家事'
@@ -62,9 +60,7 @@ RSpec.describe 'ラベル付け機能', type: :system do
         uncheck '仕事'
         uncheck '趣味'
         click_on "登録"
-        sleep 5
         task_label_lists = all('.task_label')
-        sleep 5
         expect(task_label_lists.first).to_not have_content '仕事'
         expect(task_label_lists.first).to_not have_content '趣味'
         expect(task_label_lists.first).to have_content '家事'
@@ -77,7 +73,6 @@ RSpec.describe 'ラベル付け機能', type: :system do
       it 'タスクに紐づいているラベルが表示される' do
         visit tasks_path
         click_on '詳細'
-        sleep 5
         expect(page).to_not have_content '仕事'
         expect(page).to_not have_content '趣味'
         expect(page).to have_content '家事'
@@ -96,9 +91,7 @@ RSpec.describe 'ラベル付け機能', type: :system do
         visit tasks_path
         select '家事', from: 'task_label_ids'
         click_on "検索"
-        sleep 5
         labels = all('.task_label')
-        sleep 5
         expect(labels[0]).to have_content '家事'
         expect('page').to_not have_content '仕事'
         expect('page').to_not have_content '趣味'
