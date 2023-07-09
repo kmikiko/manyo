@@ -3,6 +3,7 @@ class Task < ApplicationRecord
   validates :detail, presence: true
   validates :expired_at, presence: true
   validates :status, presence: true
+  scope :latest, -> {order(created_at: :desc)}
   scope :search_name, -> (keyword){ where('name LIKE(?)', "%#{keyword}%") }
   scope :search_status, -> (status){ where(status: status) }
   
@@ -10,5 +11,5 @@ class Task < ApplicationRecord
   belongs_to :user
   has_many :labellings, dependent: :destroy
   has_many :labels, through: :labellings, source: :label
-
+  has_one :notification, dependent: :destroy
 end

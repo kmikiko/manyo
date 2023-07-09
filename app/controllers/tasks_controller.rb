@@ -1,26 +1,31 @@
 class TasksController < ApplicationController
   def index
-    @tasks = current_user.tasks.includes(:labels).order(created_at: "DESC").page(params[:page])
+    @tasks = current_user.tasks.includes(:labels).latest.page(params[:page])
 
     if params[:sort_expired]
-      @tasks = @tasks.includes(:labels).order(expired_at: "DESC").page(params[:page])
+      @tasks = current_user.tasks.order(expired_at: "DESC").page(params[:page])
     end
     if params[:sort_priority]
-      @tasks = @tasks.order(priority: "ASC").page(params[:page])
+      @tasks = current_user.tasks.order(priority: "ASC").page(params[:page])
     end
 
     if params[:task].present?
-      if params[:task][:keyword].present? && params[:task][:status].present?
-        @tasks = @tasks.search_name(params[:task][:keyword]).search_status(params[:task][:status]).page(params[:page])
+      if params[:task][:keyword].present? && params[:task][:status].present? && params[:task][:label_ids].present?
+        @tasks = @tasks.search_name(params[:task][:keyword]).search_status(params[:task][:status]).where(id: Labelling.search_label_id(params[:task][:label_ids])).latest.page(params[:page])
+      elsif params[:task][:keyword].present? && params[:task][:status].present?
+        @tasks = @tasks.search_name(params[:task][:keyword]).search_status(params[:task][:status]).latest.page(params[:page])
+      elsif params[:task][:keyword].present? && params[:task][:label_ids].present?
+        @tasks = @tasks.search_name(params[:task][:keyword]).where(id: Labelling.search_label_id(params[:task][:label_ids])).latest.page(params[:page])
+      elsif params[:task][:status].present? && params[:task][:label_ids].present?
+        @tasks = @tasks.search_status(params[:task][:status]).where(id: Labelling.search_label_id(params[:task][:label_ids])).latest.page(params[:page])
       elsif params[:task][:keyword].present?
-        @tasks = @tasks.search_name(params[:task][:keyword]).page(params[:page])
+        @tasks = @tasks.search_name(params[:task][:keyword]).latest.page(params[:page])
       elsif params[:task][:status].present?
-        @tasks = @tasks.search_status(params[:task][:status]).page(params[:page]) 
+        @tasks = @tasks.search_status(params[:task][:status]).latest.page(params[:page]) 
       elsif params[:task][:label_ids].present?
-        # @labellings = Labelling.where(label_id: params[:task][:label_ids]).pluck(:task_id)
-        @tasks = @tasks.where(id: Labelling.search_label_id(params[:task][:label_ids])).page(params[:page])
+        @tasks = @tasks.where(id: Labelling.search_label_id(params[:task][:label_ids])).latest.page(params[:page])
       else
-        @tasks = @tasks.all.order(created_at: "DESC").page(params[:page])
+        @tasks = @tasks.all.latest.page(params[:page])
       end
     end
   end

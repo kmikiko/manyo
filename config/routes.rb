@@ -6,7 +6,9 @@ Rails.application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   resources :labellings, only: [:new, :create, :destroy]
   namespace :admin do
+    root to: 'admin/users#index'  #追記
     resources :users
     resources :labels
   end
+  resources :notifications,only: [:index]
 end

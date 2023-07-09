@@ -8,6 +8,7 @@ class User < ApplicationRecord
   has_secure_password
   validates :password, length: { minimum: 6 }
   has_many :tasks, dependent: :destroy
+  has_many :notifications, dependent: :destroy
   
   private
 
